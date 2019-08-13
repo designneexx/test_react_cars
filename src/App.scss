@@ -29,3 +29,27 @@ body, html {
 .input-pointer {
   cursor: pointer;
 }
+
+.input-hidden {
+  display: none;
+}
+
+.custom-radio {
+  background: #fff;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 2px solid #b8bfcc;
+  margin-left: 8px;
+}
+
+.custom-radio-circle {
+  width: 7px;
+  height: 7px;
+  background: #396eff;
+  border-radius: 50%;
+}

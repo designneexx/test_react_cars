@@ -4,11 +4,12 @@ import store from "../../stores/store";
 import {Container, Row, Col, Spinner, Alert, Button, ListGroup, ListGroupItem, Collapse} from 'reactstrap';
 import Error from "../../errors";
 import * as styles from "./style.module.scss";
-import { convertCoordsToMeters, styleArray } from "../../additional"; //Кастомные функции (random, delay и т.д)
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
+import {convertCoordsToMeters, styleArray} from "../../additional"; //Кастомные функции (random, delay и т.д)
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
 
-export default @observer class DetailCar extends React.Component {
+export default @observer
+class DetailCar extends React.Component {
 	state = {
 		isLoading: true,
 		hasError: false,
@@ -24,7 +25,7 @@ export default @observer class DetailCar extends React.Component {
 	}
 	
 	loadCar = async () => {
-		const { match: { params: { id } } } = this.props; //Получаем id из пропсов
+		const {match: {params: {id}}} = this.props; //Получаем id из пропсов
 		
 		//Так как у нас только муляж сервера, выглядеть будет это как-то так
 		
@@ -35,13 +36,13 @@ export default @observer class DetailCar extends React.Component {
 		});
 		
 		try {
-			if(store.cars[id]) { //Если store.cars уже есть в хранилище
+			if (store.cars[id]) { //Если store.cars уже есть в хранилище
 				await store.getDetailCarById(id); //Ждем детальной информации
 			} else {
 				await store.initCars(); //Инициализируем хранилище, загружаем список
 			}
 			
-			if(!store.cars[id]) {
+			if (!store.cars[id]) {
 				this.setState({
 					isLoading: false,
 					notFound: true,
@@ -74,16 +75,16 @@ export default @observer class DetailCar extends React.Component {
 	};
 	
 	toggle = () => {
-		this.setState(state => ({
+		this.setState(state => ( {
 			collapse: !state.collapse
-		}));
+		} ));
 	};
 	
 	//Получаем дилера (с дистанцией до точки коордионат в километрах)
 	getDealer = (dealer) => {
 		return {
 			...dealer,
-			get distance() {
+			get distance () {
 				return Math.round(convertCoordsToMeters(dealer.latitude, dealer.longitude) / 1000 * 100) / 100;
 			}
 		};
@@ -94,72 +95,73 @@ export default @observer class DetailCar extends React.Component {
 		
 		return (
 			<>
-				<ListGroupItem><strong>Имя дилера:</strong> {dealer.name}</ListGroupItem>
-				<ListGroupItem><strong>Город:</strong> {dealer.city}</ListGroupItem>
-				<ListGroupItem><strong>Адрес:</strong> {dealer.address ? dealer.address : 'Нет точного адреса'}</ListGroupItem>
-				<ListGroupItem><strong>Расстояние до дилерского центра:</strong> {dealer.distance}</ListGroupItem>
+				<ListGroupItem><strong>Имя дилера:</strong> { dealer.name }</ListGroupItem>
+				<ListGroupItem><strong>Город:</strong> { dealer.city }</ListGroupItem>
+				<ListGroupItem><strong>Адрес:</strong> { dealer.address ? dealer.address : 'Нет точного адреса' }
+				</ListGroupItem>
+				<ListGroupItem><strong>Расстояние до дилерского центра:</strong> { dealer.distance } км.</ListGroupItem>
 				<ListGroupItem>
-					{dealer.url ? <a href={dealer.url}>Сайт дилера</a> : 'К сожалению у дилера нет сайта'}
+					{ dealer.url ? <a href={ dealer.url }>Сайт дилера</a> : 'К сожалению у дилера нет сайта' }
 				</ListGroupItem>
 			</>
 		);
 	};
 	
 	renderList = () => {
-		return this.state.car.features.map((feature,i) => (
-			<ListGroupItem key={feature + i} className={styles.featureItem}>{feature}</ListGroupItem>
+		return this.state.car.features.map((feature, i) => (
+			<ListGroupItem key={ feature + i } className={ styles.featureItem }>{ feature }</ListGroupItem>
 		));
 	};
 	
 	renderCarContent = () => {
 		return (
 			<div className="content-col">
-				<div className={styles.sectionTitle}>
-					<h3 className={styles.heading}>{this.state.car.model_name}</h3>
-					<h4 className={styles.priceHeading}>{this.state.car.price} ₽</h4>
+				<div className={ styles.sectionTitle }>
+					<h3 className={ styles.heading }>{ this.state.car.model_name }</h3>
+					<h4 className={ styles.priceHeading }>{ this.state.car.price } ₽</h4>
 				</div>
-				<p className={styleArray([styles.blockHeading, styles.collapseButtonHeading])} onClick={this.toggle}>
+				<p className={ styleArray([styles.blockHeading, styles.collapseButtonHeading]) } onClick={ this.toggle }>
 					<strong>Особенности</strong>
-					<FontAwesomeIcon className={styles.ico} icon={ this.state.collapse ? faAngleUp : faAngleDown }/>
+					<FontAwesomeIcon className={ styles.ico } icon={ this.state.collapse ? faAngleUp : faAngleDown }/>
 				</p>
-				<Collapse className={styles.listCollapse} isOpen={this.state.collapse}>
-					<ListGroup className={styles.features}>
-						{this.renderList()}
+				<Collapse className={ styles.listCollapse } isOpen={ this.state.collapse }>
+					<ListGroup className={ styles.features }>
+						{ this.renderList() }
 					</ListGroup>
 				</Collapse>
-				<p className={styles.blockHeading}>
+				<p className={ styles.blockHeading }>
 					<strong>Информация о дилере:</strong>
 				</p>
 				<ListGroup>
-					{this.renderDealer()}
+					{ this.renderDealer() }
 				</ListGroup>
 			</div>
 		);
 	};
 	
 	renderImages = () => {
-		return this.state.car.images.map((image,i) => (
-			<img className="img-fluid" src={image} alt={image} key={image + i}/>
+		return this.state.car.images.map((image, i) => (
+			<img className="img-fluid" src={ image } alt={ image } key={ image + i }/>
 		));
 	};
 	
 	//Редер контента (загрузчик, нет данных, ошибка, все ок)
 	renderContent = () => {
-		if(this.state.isLoading) {
+		if (this.state.isLoading) {
 			return (
-				<div className={styles.preloader}>
-					<strong className={styles.loadText}>Загрузка</strong>
-					<Spinner type="grow" color="success" />
+				<div className={ styles.preloader }>
+					<strong className={ styles.loadText }>Загрузка</strong>
+					<Spinner type="grow" color="success"/>
 				</div>
 			);
-		} else if(this.state.notFound) {
-			return <Error error={this.state.error}/>;
-		} else if(this.state.hasError) {
+		} else if (this.state.notFound) {
+			return <Error error={ this.state.error }/>;
+		} else if (this.state.hasError) {
 			return (
 				<Alert color="danger" className="w-100">
 					Произошла ошибка при загрузке! :(
 					<p>Попробуйте снова: </p>
-					<Button onClick={this.loadCars}>
+					<Button onClick={ this.loadCars }>
 						Перезагрузить
 					</Button>
 				</Alert>
@@ -167,22 +169,22 @@ export default @observer class DetailCar extends React.Component {
 		} else {
 			return (
 				<React.Fragment>
-					<Col xs={12} md={5} lg={5} className={styles.imageGallery}>
-						{this.renderImages()}
+					<Col xs={ 12 } md={ 5 } lg={ 5 } className={ styles.imageGallery }>
+						{ this.renderImages() }
 					</Col>
-					<Col xs={12} md={7} lg={7} className={styles.contentCar}>
-						{this.renderCarContent()}
+					<Col xs={ 12 } md={ 7 } lg={ 7 } className={ styles.contentCar }>
+						{ this.renderCarContent() }
 					</Col>
 				</React.Fragment>
 			);
 		}
 	};
 	
-	render() {
+	render () {
 		return (
 			<Container>
 				<Row>
-					{this.renderContent()}
+					{ this.renderContent() }
 				</Row>
 			</Container>
 		);

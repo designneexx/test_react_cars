@@ -6,7 +6,8 @@ import {observer} from 'mobx-react'; //Импорт Mobx (observer)
 import store from "../../stores/store"; //Импорт хранилища
 import {convertCoordsToMeters} from "../../additional"; //Кастомные функции (random, delay и т.д)
 import CustomPagination from "../../components/pagination";
-import Error from "../../errors"; //Пагинация
+import Error from "../../errors";
+import * as styles from "./style.module.scss"; //Пагинация
 
 
 class Cars extends Component {
@@ -192,7 +193,8 @@ class App extends Cars {
 	//Рендер контента (если загружается, отобразим это, ошибка - отображаем, все ок - список машин)
 	renderContent = () => {
 		return this.state.isLoading ? (
-			<div className="pre-loader">
+			<div className={ styles.preloader }>
+				<strong className={ styles.loadText }>Загрузка</strong>
 				<Spinner type="grow" color="success"/>
 			</div>
 		) : this.state.paramsError ? (
@@ -213,27 +215,35 @@ class App extends Cars {
 							<strong>Сортировать по: </strong>
 						</FormGroup>
 						<FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-							<Label for="priceCheck" className="mr-sm-2 input-pointer">Цене</Label>
-							<Input
-								className="input-pointer"
-								type="radio"
-								value="price"
-								checked={ this.getSearch() === "price" }
-								onChange={ () => {} }
-								onClick={ this.filterPrice }
-								name="check" id="priceCheck"/>
+							<Label className="mr-sm-2 input-pointer">Цене
+								<span className="custom-radio">
+								{ this.getSearch() === "price" ? <strong className="custom-radio-circle"/> : '' }
+								</span>
+								<Input
+									className="input-hidden"
+									type="radio"
+									value="price"
+									checked={ this.getSearch() === "price" }
+									onChange={ () => {} }
+									onClick={ this.filterPrice }
+									name="check" id="priceCheck"/>
+							</Label>
 						</FormGroup>
 						<FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-							<Label for="distanceCheck" className="mr-sm-2 input-pointer">Удаленности</Label>
-							<Input
-								className="input-pointer"
-								type="radio"
-								value="distance"
-								checked={ this.getSearch() === "distance" }
-								onChange={ () => {} }
-								onClick={ this.filterDistance }
-								name="check" id="distanceCheck"
-							/>
+							<Label for="distanceCheck" className="mr-sm-2 input-pointer">Удаленности
+								<span className="custom-radio">
+								{ this.getSearch() === "distance" ? <strong className="custom-radio-circle"/> : '' }
+								</span>
+								<Input
+									className="input-hidden"
+									type="radio"
+									value="distance"
+									checked={ this.getSearch() === "distance" }
+									onChange={ () => {} }
+									onClick={ this.filterDistance }
+									name="check" id="distanceCheck"
+								/>
+							</Label>
 						</FormGroup>
 					</Form>
 				</Col>

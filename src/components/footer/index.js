@@ -1,5 +1,4 @@
-import React, {Component} from "react";
-import * as styles from "./style.module.scss";
+import React from "react";
 
 export default () => (
 	<footer className="page-footer font-small blue">

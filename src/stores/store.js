@@ -1,4 +1,4 @@
-import {action, computed, observable} from 'mobx'; //Импортируем декораторы
+import {action, observable} from 'mobx'; //Импортируем декораторы
 import api from "../api"; //Импортиурем объект апи
 
 //Объявляет хранилище

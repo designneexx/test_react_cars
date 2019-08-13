@@ -1,15 +1,15 @@
 import React, {Component} from "react";
 import {
 	Card, CardImg, CardText, CardBody,
-	CardTitle, CardSubtitle, Button,
-	ListGroup, ListGroupItem, Collapse
+	CardTitle, CardSubtitle,
+	ListGroup, ListGroupItem
 } from 'reactstrap';
 import * as styles from "./style.module.scss";
 import CardFooter from "reactstrap/es/CardFooter";
 import CardHeader from "reactstrap/es/CardHeader";
 import CardLink from "reactstrap/es/CardLink";
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom'; //Испорт роутера
+import {Link} from 'react-router-dom'; //Испорт роутера
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMapMarkerAlt} from "@fortawesome/free-solid-svg-icons";
 import {styleArray} from "../../additional";
@@ -53,13 +53,13 @@ class Car extends Menu {
 	
 	//Показать текст кнопки "Скрыть/Показать оставшиеся x элементов"
 	showButtonListText = () => {
-		return !this.state.collapse ? `Показать еще ${this.getHiddenCounts()} особенностей` : `Скрыть элементы списка`;
+		return !this.state.collapse ? `Показать еще ${ this.getHiddenCounts() } особенностей` : `Скрыть элементы списка`;
 	};
 	
 	//Рендер первых maxPresentList элементов списка, например выводим 4 элемента
 	renderPresentList = () => {
 		return this.props.list.slice(0, this.props.maxPresentList).map((item, i) => (
-			<ListGroupItem className={styles.listFeature} key={ i }>{ item }</ListGroupItem>
+			<ListGroupItem className={ styles.listFeature } key={ i }>{ item }</ListGroupItem>
 		));
 	};
 	
@@ -67,31 +67,32 @@ class Car extends Menu {
 		const {image, alt, title, price, dealer, id} = this.props;
 		
 		return (
-			<Card className={styles.cardCar}>
+			<Card className={ styles.cardCar }>
 				<CardHeader>
-					<Link to={`/car/${id}`}>
+					<Link to={ `/car/${ id }` }>
 						<CardImg top width="100%" src={ image } alt={ alt ? alt : "Image" }/>
 					</Link>
 				</CardHeader>
-				<CardBody className={styles.cardBodyFlex}>
+				<CardBody className={ styles.cardBodyFlex }>
 					<CardTitle>
 						<h3 className="heading">{ title }</h3>
 					</CardTitle>
 					<CardSubtitle>
-						<div className={styles.priceHeading}>{ price } ₽</div>
+						<div className={ styles.priceHeading }>{ price } ₽</div>
 					</CardSubtitle>
 					<CardText tag="div">
-						<ListGroup className={styles.listFeatures}>
+						<ListGroup className={ styles.listFeatures }>
 							{ this.renderPresentList() }
 						</ListGroup>
 					</CardText>
-					<Link to={`/car/${id}`} className={styleArray(['card-link', styles.cardLinkList])}>
-						{this.showButtonListText()}
+					<Link to={ `/car/${ id }` } className={ styleArray(['card-link', styles.cardLinkList]) }>
+						{ this.showButtonListText() }
 					</Link>
 				</CardBody>
-				<CardFooter className={styles.cardFooter}>
-					<FontAwesomeIcon icon={faMapMarkerAlt}/>
-					<CardLink className={styles.cardLink} href={dealer.url}>{dealer.name}, {dealer.distance} км.</CardLink>
+				<CardFooter className={ styles.cardFooter }>
+					<FontAwesomeIcon icon={ faMapMarkerAlt }/>
+					<CardLink className={ styles.cardLink }
+					          href={ dealer.url }>{ dealer.name }, { dealer.distance } км.</CardLink>
 				</CardFooter>
 			</Card>
 		);
