@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap&subset=cyrillic,cyrillic-ext,latin-ext,vietnamese');
+
+body, html {
+  background: rgba(184, 191, 204, 0.13);
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-footer {
+  margin-top: auto;
+  background: #fff;
+  padding: 5px;
+  font-weight: 600;
+  border-top: 1px solid rgba(99, 99, 100,.2);
+}
+
+.form-filter {
+  margin-bottom: 25px;
+}
+
+.input-pointer {
+  cursor: pointer;
+}

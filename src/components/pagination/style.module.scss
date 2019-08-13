@@ -1,0 +1,23 @@
+.buttonPrev {
+  margin-right: 15px;
+}
+
+.buttonNext {
+  margin-left: 15px;
+}
+
+.currentPage {
+  pointer-events: none;
+  color: #50c662;
+  background: #fafafa;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
